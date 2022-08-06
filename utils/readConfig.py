@@ -16,8 +16,8 @@ class ReadConfig:
         """读取json文件"""
         try:
             with open(json_file) as f:
-                data = json.load(f)
-                return data
+                config = json.load(f)
+                return config
         except IOError:
             print("文件不存在或不是json文件")
 
