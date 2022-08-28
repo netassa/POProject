@@ -35,6 +35,7 @@ class BasePage:
         else:
             self.base_url = base_url
 
+        self.driver.implicitly_wait(5)
         # 设置默认打开的页面
         self.open_page()
 
