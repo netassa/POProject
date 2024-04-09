@@ -1,6 +1,7 @@
 # -*-coding:utf-8-*-
 
 import json
+import os
 
 
 class ReadConfig:
@@ -23,6 +24,6 @@ class ReadConfig:
 
 
 if __name__ == '__main__':
-    data = ReadConfig.read_json("../config/base_data.json")
+    data = ReadConfig().read_json(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'config', 'base_data.json')))
     print(data)
     print(data['base_url'], data['email'], data['password'])

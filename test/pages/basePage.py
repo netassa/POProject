@@ -9,6 +9,8 @@ from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from utils.readConfig import ReadConfig
 
@@ -24,18 +26,17 @@ class BasePage:
         """
 
         if driver is None:
-            current_path = os.path.abspath(os.path.dirname(__file__))
-            driver_path = current_path + "/../../drivers/chromedriver.exe"
-            self.driver = webdriver.Chrome(driver_path)
+            driver_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'drivers', 'chromedriver.exe'))
+            service = webdriver.ChromeService(executable_path=driver_path)
+            self.driver = webdriver.Chrome(service=service)
         else:
             self.driver = driver
 
         if base_url is None:
-            self.base_url = ReadConfig.read_json("../../config/base_data.json")['base_url']
+            self.base_url = ReadConfig().read_json(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'config', 'base_data.json')))['base_url']
         else:
             self.base_url = base_url
 
-        self.driver.implicitly_wait(5)
         # 设置默认打开的页面
         self.open_page()
 
@@ -82,3 +83,7 @@ class BasePage:
     def log_out(self):
         """退出登录"""
         return self.select_menu("退出登录")
+
+    def switch_to_alert(self):
+        return WebDriverWait(self.driver, timeout=2).until(EC.alert_is_present())
+
