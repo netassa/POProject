@@ -25,5 +25,5 @@ if __name__ == '__main__':
     about.login()
     about.select_menu("关于我们")
     assert about.about_element.is_displayed()
-    about.select_menu("退出登录")
+    about.log_out()
     sleep(3)
